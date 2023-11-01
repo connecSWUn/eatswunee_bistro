@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mainColor">#25408F</color>
-    <color name="softColor">#9BA5C2</color>
+    <color name="mainColor">#F56714</color>
+    <color name="darkColor">#D75509</color>
+    <color name="softColor">#F2B089</color>
+    <color name="brown">#8E3B0B</color>
+    <color name="darkBrown">#45210D</color>
+    <color name="bkColor">#FAF9F7</color>
     <color name="purple_200">#FF3700B3</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>

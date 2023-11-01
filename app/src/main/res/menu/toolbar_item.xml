@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_category"
+        android:id="@+id/menuAlarm"
         app:showAsAction="always"
-        android:icon="@drawable/baseline_notifications_24"
+        android:icon="@drawable/notifications_read"
         android:title="alarm"/>
 </menu>

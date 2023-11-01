@@ -1,133 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".BistroMoneyActivity"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="1dp"
-        tools:context=".BistroMoneyActivity">
-        <include layout="@layout/bistro_appbar" />
-
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="300dp"
-        android:text="오늘의 매출 : "
-        android:textColor="#8E3B0B"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/today_revenue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="350dp"
-            android:text="XXX,XXX"
-            android:textColor="#F56714"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="380dp"
-        android:text="원"
-        android:textColor="#45210D"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="460dp"
-        android:text="총 매출 : "
-        android:textSize="15sp"
-        android:textColor="#45210D"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/total_revenue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
-        android:layout_marginTop="460dp"
-        android:text="X,XXX,XXX"
-        android:textColor="#45210D"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="460dp"
-        android:textColor="#45210D"
-        android:textSize="20sp"
-        android:text="원"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start|left"
-            app:headerLayout="@layout/appbar_header"
-            app:menu="@menu/menu_toolbar" >
-
-        </com.google.android.material.navigation.NavigationView>
-
-    </androidx.drawerlayout.widget.DrawerLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:paddingTop="10dp"
+        android:orientation="vertical" >
+
+        <include layout="@layout/bistro_appbar" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="오늘의 매출 :"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:textColor="@color/brown" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"  >
+
+                <TextView
+                    android:id="@+id/tvTodayTotalRevenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXX,XXX"
+                    android:textSize="60sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="13dp"
+                    android:paddingLeft="10dp"
+                    android:gravity="bottom"
+                    android:text="원"
+                    android:textSize="15sp"
+                    android:textColor="@color/darkBrown"/>
+
+            </LinearLayout>
+
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="430dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginVertical="25dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_gravity="center_horizontal"
                 app:srcCompat="@drawable/drawable_dash_line" />
 
-            <Button
-                android:id="@+id/button_money"
-                android:layout_width="416dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="210dp"
-                android:background="#F2B089"
-                android:text="확인"
-                android:textColor="#D75509"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="총 매출 :"
+                    android:textSize="15sp"
+                    android:textColor="@color/darkBrown" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right" >
+
+                    <TextView
+                        android:id="@+id/tvTotalRevenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="X,XXX,XXX"
+                        android:textSize="20sp"
+                        android:textColor="@color/darkBrown" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="원"
+                        android:textSize="20sp"
+                        android:textColor="@color/darkBrown" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/btnHome"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/softColor"
+                android:text="홈"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkColor" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|left"
+        android:background="@color/bkColor"
+        app:headerLayout="@layout/appbar_header"
+        app:menu="@menu/menu_toolbar" >
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

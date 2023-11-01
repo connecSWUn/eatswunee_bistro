@@ -2,29 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="#FFFFFF"
+    android:layout_height="wrap_content"
+    android:background="@color/bkColor"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
         android:id="@+id/rest_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="식당이름"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="40dp"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="#D75509"/>
-
-    <Space
         android:layout_width="match_parent"
-        android:layout_height="85dp" />
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="50dp"
+        android:text="식당이름"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/darkColor"
+        android:letterSpacing="0.25"/>
 
-    <View
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#4D8E3B0B"/>
+        android:background="@drawable/drawable_dash_line"/>
 
 </LinearLayout>

@@ -4,91 +4,117 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/drawable_dash_line"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:paddingHorizontal="10dp"
+        android:paddingTop="15dp"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:src="@drawable/drawable_dash_line"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="주문번호"
+            android:textSize="18sp"
+            android:textStyle="bold|normal"
+            android:textColor="@color/mainColor" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/order_num"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:text="주문번호"
-                android:textSize="18sp"
-                android:textColor="#F56714"
-                android:textStyle="bold|normal"/>
-
-            <TextView
-                android:id="@+id/bistro_num"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="130dp"
-                android:text="197"
-                android:textSize="18sp"
-                android:textColor="#F56714"
-                android:textStyle="bold|normal"/>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvOrderNum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:gravity="center"
+            android:text="197"
+            android:textSize="18sp"
+            android:textStyle="bold|normal"
+            android:textColor="@color/mainColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:gravity="right" >
 
-            <TextView
-                android:id="@+id/menu_name"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:hint="메뉴이름"
-                android:text=""
-                android:textSize="15sp"
-                android:textColor="#45210D"/>
-
-            <TextView
-                android:id="@+id/menu_num"
+            <ImageView
+                android:id="@+id/imgIsRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="n개"
-                android:layout_marginTop="10dp"
-                android:text=""
-                android:textSize="14sp"
-                android:textColor="#45210D"/>
-        </LinearLayout>
+                android:src="@drawable/oval_style" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="127dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                android:layout_marginLeft="230dp"
-                android:gravity="right"
-                android:text="2023..3.27 11:45"
-                android:textColor="#808E3B0B"
-                android:textSize="14sp" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvOrderTitleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메뉴명"
+            android:textSize="15sp"
+            android:textColor="@color/darkBrown"/>
+
+        <TextView
+            android:id="@+id/tvOrderEtc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:visibility="gone"
+            android:text="외"
+            android:textSize="15sp"
+            android:textColor="@color/darkBrown" />
+
+        <TextView
+            android:id="@+id/tvOrderEtcCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="n"
+            android:textSize="15sp"
+            android:textColor="@color/darkBrown"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="개"
+            android:textSize="15sp"
+            android:textColor="@color/darkBrown" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="15dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvOrderCreatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023.03.27. 11:45"
+            android:textColor="#808E3B0B"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/drawable_dash_line" />
 
 </LinearLayout>

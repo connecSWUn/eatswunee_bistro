@@ -1,82 +1,91 @@
 package com.example.eatswunee_bistro.api;
 
-import com.example.eatswunee_bistro.api.Notification;
-
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
 public class Data {
-
+    // 주문 목록 조회
     @SerializedName("orders")
     @Expose
-    private List<orders> ordersList;
+    private List<Orders> ordersList;
 
-    @SerializedName("restaurant_name")
+    // 주문 내역 조회
+    @SerializedName("order_id")
     @Expose
-    private String restaurant_name;
+    private String orderId;
 
+    @SerializedName("order_num")
+    @Expose
+    private String orderNum;
+
+    @SerializedName("order_created_at")
+    @Expose
+    private String orderCreatedAt;
+
+    @SerializedName("menus")
+    @Expose
+    private List<Menus> menusList;
+
+    // 식당 매출 조회
+    @SerializedName("today_total_revenue")
+    @Expose
+    private int todayTotalRevenue;
+
+    @SerializedName("total_revenue")
+    @Expose
+    private int totalRevenue;
+
+    // 주문 알림 조회
     @SerializedName("notifications")
     @Expose
     private List<Notification> notifications;
 
-    @SerializedName("today_total_revenue")
+    // 식당 이름 조회
+    @SerializedName("restaurant_name")
     @Expose
-    private String today_total_revenue;
+    private String restaurantName;
 
-    @SerializedName("total_revenue")
-    @Expose
-    private String total_revenue;
+    public List<Orders> getOrdersList() {
+        return ordersList;
+    }
 
-    @SerializedName("order_num")
-    @Expose
-    private String order_num;
+    /*public void setOrdersList(List<orders> ordersList) {
+        this.ordersList = ordersList;
+    }*/
 
-    @SerializedName("order_id")
-    @Expose
-    private String order_id;
+    public String getOrderId() {
+        return orderId;
+    }
 
-    @SerializedName("menus")
-    @Expose
-    private List<menus> menusList;
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public String getOrderCreatedAt() {
+        return orderCreatedAt;
+    }
+
+    public List<Menus> getMenusList(){return menusList;}
+
+    public int getTodayTotalRevenue() {
+        return todayTotalRevenue;
+    }
+
+    public int getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
 
     public List<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(List<Notification> notifications) {
+    /*public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
-    }
-
-
-    public List<orders> getOrdersList() {
-        return ordersList;
-    }
-
-    public String getRestaurant_name() {
-        return restaurant_name;
-    }
-
-    public void setOrdersList(List<orders> ordersList) {
-        this.ordersList = ordersList;
-    }
-
-    public String getToday_total_revenue() {
-        return today_total_revenue;
-    }
-
-    public String getTotal_revenue() {
-        return total_revenue;
-    }
-
-    public String getOrder_num() {
-        return order_num;
-    }
-
-    public String getOrder_id() {
-        return order_id;
-    }
-
-    public List<menus> getMenusList(){return menusList;}
+    }*/
 }

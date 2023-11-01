@@ -1,85 +1,151 @@
 package com.example.eatswunee_bistro;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eatswunee_bistro.api.Data;
 import com.example.eatswunee_bistro.api.Result;
 import com.example.eatswunee_bistro.api.RetrofitClient;
 import com.example.eatswunee_bistro.api.ServiceApi;
+import com.example.eatswunee_bistro.api.StatusChangeRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BistroOrderActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private AlarmAdapter alarmAdapter;
     private RetrofitClient retrofitClient;
     private ServiceApi serviceApi;
+    private RecyclerView rvOrderList;
+    private TextView tvOrderNum/*, tvMenuName, tvMenuCnt*/;
+    private String orderId;
+
+    private View.OnClickListener imgCallListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            setOrderStatusCompleted(orderId); // 제작 상태 완료로 변경
+
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener btnOkListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            /*finish();*/
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bistro_order);
 
-        //ImageButton imageButton = findViewById(R.id.imageButton2);
-        Button imagebutton = findViewById(R.id.button3);
-        imagebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                finish();
-            }
-        });
+        // 객체에 대한 참조
+        tvOrderNum = findViewById(R.id.tvOrderNum); // 주문번호
+        /*tvMenuName = findViewById(R.id.tvMenuName);
+        tvMenuCnt = findViewById(R.id.tvMenuCnt);*/
+        rvOrderList = findViewById(R.id.rvOrderList);
+        ImageView imgCall = findViewById(R.id.imgCall); // 호출 버튼
+        Button btnOk = findViewById(R.id.btnOk); // 확인 버튼
 
-        //리사이클러뷰 api 통신
+        imgCall.setOnClickListener(imgCallListener);
+        btnOk.setOnClickListener(btnOkListener);
+
+        orderId = getIntent().getStringExtra("order_id"); // orderId 추출
+        callOrder(orderId); // 주문서 불러오기
+    }
+
+    public void callOrder(String orderId) { // 주문서 api 통신
         retrofitClient = RetrofitClient.getInstance();
         serviceApi = RetrofitClient.getRetrofitInterface();
-        //TextView order_id = findViewById(R.id.order_id);
-        TextView order_num = findViewById(R.id.order_num);
-        TextView menu_name = findViewById(R.id.menu_name);
-        TextView menu_cnt = findViewById(R.id.menu_cnt);
 
-        //orderid 선언
-        String temp = getIntent().getStringExtra("order_id");
-
-        serviceApi.getBistro2(Integer.parseInt(temp)).enqueue(new Callback<Result>() {
-//        serviceApi.getBistro2(1).enqueue(new Callback<Result>() {
+        Call call = serviceApi.getBistroOrder(orderId, MainActivity.restaurantId);
+        call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                Result result = response.body();
-                Data data = result.getData();
-                Log.d("retrofit", "Data fetch success");
-                order_num.setText(data.getOrder_num());
-                String Total = "";
-                String Totalnum = "";
-                for(int i = 0; i<data.getMenusList().size(); i++){
-                    Total += data.getMenusList().get(i).getMenuName() + '\n';
-                    Totalnum += data.getMenusList().get(i).getMenuCnt() + '\n';
-                }
-                menu_name.setText(Total);
-                menu_cnt.setText(Totalnum);
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse 성공: " + response.toString());
+                    Result result = response.body();
+                    Data data = result.getData();
 
+                    setOrderItems(data);
+                }
+                else {
+                    Log.e(TAG, "onResponse 실패: " + response.code());
+                }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-                Log.d("retrofit", t.getMessage());
+                Log.d(TAG, t.getMessage());
             }
         });
     }
 
+    public void setOrderItems(Data data) {
+        tvOrderNum.setText(data.getOrderNum());
+
+        /*String menuNameList = data.getMenusList().get(0).getMenuName();
+        String xSign = "x";
+        String menuCntList = data.getMenusList().get(0).getMenuCnt();
+        for (int i = 1; i < data.getMenusList().size(); i++) {
+            menuNameList += "\n" + data.getMenusList().get(i).getMenuName();
+            xSign += "\nx";
+            menuCntList += "\n" + data.getMenusList().get(i).getMenuCnt();
+        }
+
+        tvMenuName.setText(menuNameList);
+        tvMenuCnt.setText(menuCntList);*/
+
+        BistroOrderAdapter bistroOrderAdapter = new BistroOrderAdapter(data.getMenusList());
+        setOrderListRecyclerView(bistroOrderAdapter, 30);
+    }
+
+    public void setOrderListRecyclerView(BistroOrderAdapter bistroOrderAdapter, int divHeight) {
+        rvOrderList.setLayoutManager(new LinearLayoutManager(this)); // 리사이클러뷰에 LinearLayoutManager 객체 지정
+        rvOrderList.setAdapter(bistroOrderAdapter);
+
+        // 리사이클러뷰 아이템 간격 조정
+        RecyclerItemDecoActivity decorationHeight = new RecyclerItemDecoActivity(divHeight);
+        rvOrderList.addItemDecoration(decorationHeight);
+    }
+
+    public void setOrderStatusCompleted(String orderId) { // 주문 제작 상태 변경 api 통신
+        retrofitClient = RetrofitClient.getInstance();
+        serviceApi = RetrofitClient.getRetrofitInterface();
+
+        Call call = serviceApi.setOrderStatus(new StatusChangeRequest(MainActivity.restaurantId, orderId, "COMPLETED"));
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse 성공: " + response.toString());
+                }
+                else {
+                    Log.e(TAG, "onResponse 실패: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Log.d(TAG, t.getMessage());
+            }
+        });
+    }
 }

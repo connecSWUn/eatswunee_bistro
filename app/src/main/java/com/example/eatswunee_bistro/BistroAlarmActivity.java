@@ -2,21 +2,12 @@ package com.example.eatswunee_bistro;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,110 +19,109 @@ import com.example.eatswunee_bistro.api.RetrofitClient;
 import com.example.eatswunee_bistro.api.ServiceApi;
 import com.example.eatswunee_bistro.api.Notification;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BistroAlarmActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private AlarmAdapter alarmAdapter;
+    private RecyclerView rvAlarmList;
+    private Button btnReturn;
     private RetrofitClient retrofitClient;
     private ServiceApi serviceApi;
+
+    private View.OnClickListener btnReturnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            MainActivity.isNotificationRead = true;
+            finish();
+            overridePendingTransition(0, 0);
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bistro_alarm);
 
-        Button button = findViewById(R.id.returnbtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-//        //더미 데이터 생성
-//        ArrayList<String> list = new ArrayList<>();
-//        for (int i = 0; i < 100; i++) {
-//            list.add("Test Data" + i);
-//        }
+        rvAlarmList = findViewById(R.id.rvAlarmList);
+        btnReturn = findViewById(R.id.btnReturn);
 
-        //리사이클러뷰에 linearlayoutmanager 객체 지정
-        RecyclerView recyclerView = findViewById(R.id.a_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        btnReturn.setOnClickListener(btnReturnListener);
 
-        //리사이클러뷰 api 통신
+        // 더미 데이터 생성
+        /*ArrayList<String> orderNumList = new ArrayList<>();
+        ArrayList<String> menuList = new ArrayList<>();
+        ArrayList<String> menuNumList = new ArrayList<>();
+        ArrayList<String> dateList = new ArrayList<>();
+        for (int i = 1; i < 11; i++) {
+            orderNumList.add(Integer.toString(i));
+            menuList.add("메뉴" + i + "이름");
+            if (i % 2 == 0) menuNumList.add("0");
+            else menuNumList.add(Integer.toString(i));
+            dateList.add("2023.07." + i + ". 12:00");
+        }*/
+
+        callAlarmList(); // 알림 목록 불러오기
+    }
+
+    public void callAlarmList() { // 알림 목록을 받아오기 위한 리사이클러뷰 api 통신
         retrofitClient = RetrofitClient.getInstance();
         serviceApi = RetrofitClient.getRetrofitInterface();
-        Call<Result> call = serviceApi.getBistro3("1");
-        Data data = new Data();
-        alarmAdapter = new AlarmAdapter(data.getNotifications());
+
+        Call call = serviceApi.getBistroNotification(MainActivity.restaurantId);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccessful()) {
-                    Log.e(TAG, "isSuccessful() : " + response.body());
+                    Log.d(TAG, "onResponse 성공: " + response.toString());
                     Result result = response.body();
                     Data data = result.getData();
-                    Log.d("retrofit", "Data fetch success");
-                    alarmAdapter = new AlarmAdapter(data.getNotifications());
-                    alarmAdapter.setOnItemClickListener(new AlarmAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View v, int pos) {
-                            Intent intent = new Intent (BistroAlarmActivity.this, BistroOrderActivity.class);
-                            intent.putExtra("SelectedItem", pos);
-                            launcher.launch(intent);
-                        }
-                    });
-                    recyclerView.setAdapter(alarmAdapter);
-                } else {
-                    Log.e(TAG, "isSuccessful()이 아님 : " + response.body());
-                }
 
+                    List<Notification> notificationList = data.getNotifications();
+                    setAlarmListItem(notificationList);
+                } else {
+                    Log.e(TAG, "onResponse 실패: " + response.code());
+                }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-                Log.d("retrofit", t.getMessage());
+                Log.d(TAG, t.getMessage());
             }
         });
-
-
-        //리사이클러뷰에 Adapter 객체 지정
-        //AlarmAdapter adapter = new AlarmAdapter(list);
-        //recyclerView.setAdapter(adapter);
-
-        //리사이클러뷰 아이템 간격 조정
-        RecyclerItemDecoActivity decoraion_height = new RecyclerItemDecoActivity(20);
-        recyclerView.addItemDecoration(decoraion_height);
-
-        //this.settingSideNavBar();
-
-        //알림 툴바 설정
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.bistro_toolbar);
-        //setSupportActionBar(toolbar);
-
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //커스텀 어댑터를 선언해준뒤 인자 값을 이용해서 setOnItemClickListener쓰기
-        //AlarmAdapter adapter1 = new AlarmAdapter(list);
-        //커스텀 리스너 객체 생성 및 전달
-        //클릭 이벤트
-//        adapter1.setOnItemClickListener(new CustomAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View v, int pos) {
-//                Intent intent = new Intent(BistroAlarmActivity.this, BistroOrderActivity.class);
-//                intent.putExtra("SelectedItem", pos);
-//                launcher.launch(intent);
-//            }
-//        });
     }
+
+    public void setAlarmListItem(List<Notification> notificationList) {
+        AlarmAdapter alarmAdapter = new AlarmAdapter(notificationList);
+        /*alarmAdapter.setOnItemClickListener(new AlarmAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Intent intent = new Intent (BistroAlarmActivity.this, BistroOrderActivity.class);
+                intent.putExtra("SelectedItem", pos);
+                launcher.launch(intent);
+            }
+        });*/
+        Log.d(TAG, Integer.toString(alarmAdapter.getItemCount()));
+        setRecyclerView(alarmAdapter, -5);
+    }
+
+    public void setRecyclerView(AlarmAdapter alarmAdapter, int divHeight) {
+        rvAlarmList.setLayoutManager(new LinearLayoutManager((Context)this)); // 리사이클러뷰에 LinearLayoutManager 설정
+        // 리사이클러뷰에 Adapter 객체 지정 (w/더미 데이터)
+        /*AlarmAdapter adapter = new AlarmAdapter(orderNumList, menuList, menuNumList, dateList);
+        recyclerView.setAdapter(adapter);*/
+        rvAlarmList.setAdapter(alarmAdapter);
+
+        // 리사이클러뷰 아이템 간격 조정
+        RecyclerItemDecoActivity decorationHeight = new RecyclerItemDecoActivity(divHeight);
+        rvAlarmList.addItemDecoration(decorationHeight);
+    }
+
     //launcher 선언
     //startActivityForResult 대체
-    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    /*ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
@@ -140,5 +130,5 @@ public class BistroAlarmActivity extends AppCompatActivity {
                         Intent intent = result.getData();
                     }
                 }
-            });
+            });*/
 }
