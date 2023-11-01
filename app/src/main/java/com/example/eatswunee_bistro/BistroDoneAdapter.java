@@ -1,112 +1,139 @@
 package com.example.eatswunee_bistro;
 
 import android.content.Context;
-import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.eatswunee_bistro.api.menus;
-import com.example.eatswunee_bistro.api.orders;
+import com.example.eatswunee_bistro.api.Orders;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class BistroDoneAdapter extends RecyclerView.Adapter<BistroDoneAdapter.ViewHolder> {
-    private List<orders> ordersList;
+    private List<Orders> ordersList;
+    private Context context;
+    /*private MenuAdapter menuAdapter;*/
 
-    public BistroDoneAdapter(List<orders> items) {this.ordersList = items;}
+    public BistroDoneAdapter(List<Orders> items) {this.ordersList = items;}
 
-    //아이템 뷰를 저장하는 뷰 홀더 클래스
+    // 아이템 뷰를 저장하는 뷰 홀더 클래스
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView order_num, menu_name, menu_cnt;
-        CustomAdapter.ServiceItemClickListener serviceItemClickListener;
+        private TextView tvOrderNum, tvOrderCreatedAt, tvMenuName, tvMenuCnt;
+        private LinearLayout layoutMenuList;
+        /*private RecyclerView recyclerView;*/
 
         ViewHolder(View itemView) {
             super(itemView);
 
             //뷰 객체에 대한 참조
-            order_num = itemView.findViewById(R.id.order_num);
-            menu_name = itemView.findViewById(R.id.menu_name);
-            menu_cnt = itemView.findViewById(R.id.menu_cnt);
-
-            //itemView.setOnClickListener((View.OnClickListener) this);
+            tvOrderNum = itemView.findViewById(R.id.tvOrderNum);
+            tvOrderCreatedAt = itemView.findViewById(R.id.tvOrderCreatedAt);
+            tvMenuName = itemView.findViewById(R.id.tvMenuName);
+            tvMenuCnt = itemView.findViewById(R.id.tvMenuCnt);
+            layoutMenuList = itemView.findViewById(R.id.layoutMenuList);
+            /*recyclerView = itemView.findViewById(R.id.recyclerView);*/
         }
-        //api 통신
-        public void setItem(orders item) {
-            order_num.setText(item.getOrderNum());
-            menu_name.setText(item.getmenusList().get(0).getMenuName());
-            //0+1
-            int total_cnt = 0;
-            for( int i = 0; i<item.getmenusList().size();i++){
-                total_cnt += Integer.parseInt(item.getmenusList().get(i).getMenuCnt());
+
+        public void setOrdersItem(Orders ordersItem) { // 아이템뷰에 내용 표시
+            tvOrderNum.setText(ordersItem.getOrderNum()); // 주문번호
+            tvOrderCreatedAt.setText(ordersItem.getOrderCreatedAt()); // 주문일시
+            setMenuList(ordersItem); // 메뉴명, 수량
+        }
+
+        public void setMenuList(Orders item) { // 주문한 메뉴 및 수량 리스트 표시
+            String menuNameList = item.getMenusList().get(0).getMenuName(); // 메뉴명 리스트
+            String menuCntList = " x " + item.getMenusList().get(0).getMenuCnt(); // 수량(형식: x 개) 리스트
+
+            for (int i = 1; i < item.getMenusList().size(); i++) {
+                menuNameList += "\n" + item.getMenusList().get(i).getMenuName();
+                menuCntList += "\n x " + item.getMenusList().get(i).getMenuCnt();
             }
-            menu_cnt.setText(Integer.toString(total_cnt));
+
+            tvMenuName.setText(menuNameList); // 메뉴명
+            tvMenuCnt.setText(menuCntList); // 수량
+
+            /*for (int i = 0; i < item.getMenusList().size(); i++) {
+                String menuName = item.getMenusList().get(i).getMenuName(); // 메뉴명
+                String menuCnt = " x " + item.getMenusList().get(i).getMenuCnt(); // 수량(형식: x 개)
+
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT); // LinearLayout width, height
+                ViewGroup.LayoutParams tvParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT); // Textview width, height
+
+                // 메뉴 아이템 LinearLayout
+                LinearLayout layoutItem = new LinearLayout(context);
+                layoutItem.setLayoutParams(layoutParams);
+                layoutItem.setOrientation(LinearLayout.HORIZONTAL);
+                layoutItem.setPadding(0, 10, 0, 10);
+
+                // 메뉴명 TextView
+                TextView tvMenuName = new TextView(context);
+                tvMenuName.setLayoutParams(tvParams);
+                tvMenuName.setText(menuName);
+                tvMenuName.setTextSize(15);
+                tvMenuName.setTextColor(ContextCompat.getColor(context, R.color.darkBrown));
+                tvMenuName.setGravity(Gravity.BOTTOM);
+                layoutItem.addView(tvMenuName);
+
+                // 오른쪽 정렬 LinearLayout
+                LinearLayout layoutRight = new LinearLayout(context);
+                layoutRight.setLayoutParams(layoutParams);
+                layoutRight.setOrientation(LinearLayout.HORIZONTAL);
+                layoutRight.setGravity(Gravity.RIGHT);
+
+                // 메뉴 수량 TextView
+                TextView tvMenuCnt = new TextView(context);
+                tvMenuCnt.setLayoutParams(tvParams);
+                tvMenuCnt.setText(menuCnt);
+                tvMenuCnt.setTextSize(15);
+                tvMenuCnt.setTextColor(ContextCompat.getColor(context, R.color.darkBrown));
+                tvMenuCnt.setGravity(Gravity.BOTTOM);
+                tvMenuCnt.setPadding(5, 0, 0, 0);
+                layoutRight.addView(tvMenuCnt);
+
+                layoutItem.addView(layoutRight);
+                layoutMenuList.addView(layoutItem);
+            }*/
+
+            /*recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            menuAdapter = new MenuAdapter(item.getMenusList());
+            recyclerView.setAdapter(menuAdapter);
+
+            // 리사이클러뷰 아이템 간격 조정
+            RecyclerItemDecoActivity decorationHeight = new RecyclerItemDecoActivity(15);
+            recyclerView.addItemDecoration(decorationHeight);*/
         }
     }
 
-        //onCreateViewHolder() - 아이템 뷰를 위한 뷰 홀더 객체 생성하여 리턴
-        @Override
-        public BistroDoneAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    // 아이템 뷰를 위한 뷰 홀더 객체 생성하여 리턴
+    @Override
+    public BistroDoneAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View view = inflater.inflate(R.layout.recyclerview_item, parent, false);
-            BistroDoneAdapter.ViewHolder vh = new BistroDoneAdapter.ViewHolder(view);
+        View view = inflater.inflate(R.layout.recyclerview_item, parent, false);
+        BistroDoneAdapter.ViewHolder viewHolder = new BistroDoneAdapter.ViewHolder(view);
 
-            return vh;
-        }
-
-        //onBindViewHolder - position에 해당하는 데이터를 뷰 홀더의 아이템뷰에 표시
-        @Override
-        public void onBindViewHolder(BistroDoneAdapter.ViewHolder holder, int position) {
-            orders item = ordersList.get(position);
-            holder.setItem(item);
-
-            holder.serviceItemClickListener = new CustomAdapter.ServiceItemClickListener() {
-                @Override
-                public void onItemClickListener(View v, int position) {
-                    Intent intent = new Intent(v.getContext(), BistroDoneActivity.class);
-                    v.getContext().startActivity(intent);
-                }
-            };
-        }
-
-        //getItemCount 전체 데이터 개수 리턴
-        @Override
-        public int getItemCount() {
-
-                return ordersList.size();
-
-
-        }
-
-        //커스텀 리스너 인터페이스
-        public interface OnItemClickListener {
-            void onItemClick(View v, int pos);
-        }
-
-    //serviceitemClickListener 인터페이스
-    public interface ServiceItemClickListener{
-        void onItemClickListener(View v, int position);
+        return viewHolder;
     }
 
-        //리스너 객체 참조를 저장하는 변수
-        private OnItemClickListener mListener = null;
-
-        public void setOnItemClickListener(OnItemClickListener listener) {
-            this.mListener = listener;
-        }
-
-
-        //ViewHolder에서 클릭 시 동작 호출
-
+    // position에 해당하는 데이터를 뷰 홀더의 아이템뷰에 표시
+    @Override
+    public void onBindViewHolder(BistroDoneAdapter.ViewHolder holder, int position) {
+        Orders ordersItem = ordersList.get(position);
+        holder.setOrdersItem(ordersItem);
     }
+
+    // 전체 데이터 개수 리턴
+    @Override
+    public int getItemCount() {
+        return ordersList.size();
+    }
+}
 
 

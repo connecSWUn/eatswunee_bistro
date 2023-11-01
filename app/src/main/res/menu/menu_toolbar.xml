@@ -7,15 +7,15 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/menu_home"
+            android:id="@+id/menuHome"
             android:icon="@drawable/baseline_house_24"
             android:title="제작 대기 중 목록" />
         <item
-            android:id="@+id/menu_list"
+            android:id="@+id/menuDoneList"
             android:icon="@drawable/baseline_format_list_bulleted_24"
             android:title="제작 완료 목록" />
         <item
-            android:id="@+id/menu_money"
+            android:id="@+id/menuMoney"
             android:icon="@drawable/baseline_money_24"
             android:title="매출" />
     </group>
