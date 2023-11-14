@@ -24,9 +24,9 @@ public class Notification {
     @Expose
     private String orderCreatedAt;
 
-    @SerializedName("order_is_read")
+    @SerializedName("is_notification_read")
     @Expose
-    private boolean isOrderRead;
+    private boolean isNotificationRead;
 
     public String getOrderId() {
         return orderId;
@@ -68,9 +68,5 @@ public class Notification {
         this.orderCreatedAt = orderCreatedAt;
     }*/
 
-    public boolean getIsOrderRead() { return isOrderRead; }
-
-    public void setIsOrderRead(boolean isOrderRead) {
-        this.isOrderRead = isOrderRead;
-    }
+    public boolean getIsNotificationRead() { return isNotificationRead; }
 }

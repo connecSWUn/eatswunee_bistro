@@ -105,12 +105,14 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
             setOrderEtcMenuCntText(tvOrderEtcMenuCnt, tvOrderEtc, item);
             tvOrderCreatedAt.setText(item.getOrderCreatedAt());
 
-            if (item.getIsOrderRead()) {
+            /*tvOrderNum.setText(String.valueOf(item.getIsNotificationRead()));*/
+
+            if (item.getIsNotificationRead()) {
                 imgIsRead.setVisibility(View.INVISIBLE);
             }
             else {
                 imgIsRead.setVisibility(View.VISIBLE);
-                item.setIsOrderRead(true); // 서버에 읽음 표시
+                /* 서버에 읽음 표시 */
             }
         }
     }
