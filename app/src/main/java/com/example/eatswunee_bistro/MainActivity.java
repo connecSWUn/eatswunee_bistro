@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
 
                     List<Notification> notificationList = data.getNotifications();
                     for (int i = 0; i < notificationList.size(); i++) {
-                        if (!notificationList.get(i).getIsOrderRead()) {
+                        if (!notificationList.get(i).getIsNotificationRead()) {
                             MainActivity.isNotificationRead = false;
                             break;
                         }
