@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "700354696810",
-    "project_id": "swulab-80285",
-    "storage_bucket": "swulab-80285.appspot.com"
+    "project_number": "872638161688",
+    "project_id": "eatswunee-fa085",
+    "storage_bucket": "eatswunee-fa085.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:700354696810:android:158ee41507b5151f765c13",
-        "android_client_info": {
-          "package_name": "com.example.eatswunee"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBdHh9QAHe_r5EoaQ3HyrhooCx1AH0DM8c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:700354696810:android:ffde41b125b726dd765c13",
+        "mobilesdk_app_id": "1:872638161688:android:e53b1f02211c4f7b6c346d",
         "android_client_info": {
           "package_name": "com.example.eatswunee_bistro"
         }
@@ -34,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBdHh9QAHe_r5EoaQ3HyrhooCx1AH0DM8c"
+          "current_key": "AIzaSyD8Ln-smjRkE_TVDoIRmvAXfRTXZ-tfX6Q"
         }
       ],
       "services": {
@@ -45,7 +26,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:700354696810:android:92ad674504dcae20765c13",
+        "mobilesdk_app_id": "1:872638161688:android:cdc5b4bf65596e5f6c346d",
         "android_client_info": {
           "package_name": "com.example.eatswuneekotlin"
         }
@@ -53,45 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBdHh9QAHe_r5EoaQ3HyrhooCx1AH0DM8c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:700354696810:android:0fe3e91c8d4e0ecb765c13",
-        "android_client_info": {
-          "package_name": "com.swulab"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBdHh9QAHe_r5EoaQ3HyrhooCx1AH0DM8c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:700354696810:android:395180b91ca78bf7765c13",
-        "android_client_info": {
-          "package_name": "example.dowell.myapplication"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBdHh9QAHe_r5EoaQ3HyrhooCx1AH0DM8c"
+          "current_key": "AIzaSyD8Ln-smjRkE_TVDoIRmvAXfRTXZ-tfX6Q"
         }
       ],
       "services": {
