@@ -29,6 +29,7 @@ public class FirebaseMsgService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
         // TODO: Implement this method to send token to your app server.
+        Log.d("MessageToken", "Refreshed token: " + token);
     }
 
     @Override

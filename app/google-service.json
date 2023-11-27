@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "936384834809",
+    "project_id": "eatswunee-bistro",
+    "storage_bucket": "eatswunee-bistro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936384834809:android:209490e0008d9d745e0628",
+        "android_client_info": {
+          "package_name": "com.example.eatswunee_bistro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936384834809-4ajcs1qrlgi6q94bdidbnti37c48l561.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-1Jh09NFvL5WoWyhlAlYbWvzzRaj__6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936384834809-4ajcs1qrlgi6q94bdidbnti37c48l561.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
